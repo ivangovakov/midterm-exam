@@ -67,3 +67,62 @@ text="My name is Bob and I live in Bob's house bobbyBobobo"
 
 print(count_pattern_occurrences(text))
 
+def is_valid_url(url):
+    """
+    Checks if the given string is a valid URL
+
+    :param url: The string to check
+    :return: True if valid URL, False otherwise
+    """
+
+   #this checks if the URL starts with "http://" or "https://"
+    if not (url.startswith("http://") or url.startswith("https://")):
+        return False  # Invalid if it does not start correctly
+
+    #this ensures there is at least one '.' (dot) after the protocol
+    dot_position = url.find(".", 8)  #the searching begins after "http://" or "https://"
+    if dot_position == -1:
+        return False  #there is no dot so the url is not valid
+
+    # this checks that the URL ends with a common domain extension
+    if not (url.endswith(".com") or url.endswith(".org") or url.endswith(".net") or url.endswith(".edu")):
+        return False  #if it does not end with a known domain return false
+
+    return True  # if url passed all of the checks, it is valid
+
+
+print(is_valid_url("http://google.com"))
+print(is_valid_url("https://example.org"))
+print(is_valid_url("ftp://myserver.net"))
+
+
+def days_since_birthday(birthday):
+    """
+    this function calculates how many days have passed since the birthday,
+    considering only full years (excluding the birth year and the current year).
+
+    :param birthday: The birthday in "DD-MM-YYYY" format.
+    :return: The total number of days.
+    """
+
+    #this extracts the birth year from the birthday string
+    birth_year = int(birthday[-4:])  # last 4 characters in date is year
+
+    #get the current year we assume it's 2025 for this example
+    current_year = 2025
+    #the total days counter
+    total_days = 0
+
+    #loop through all full years between birth year and current year
+    for year in range(birth_year + 1, current_year):
+        #this checks if the year is a leap year (366 days) or normal year (365 days)
+        if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
+            total_days += 366  #for leap year
+        else:
+            total_days += 365  #for normal year
+
+    return total_days
+
+
+# Example usage:
+print(days_since_birthday("12-06-2005"))
